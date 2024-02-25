@@ -43,7 +43,6 @@ async def callback(code: str):
         headers['Authorization'] = f'Bearer {access_token}'
         response = await client.get('https://api.github.com/user', headers=headers)
     response_json = response.json()
-    return response_json
     username = response_json['login']
 
     # Get all starred repositories
