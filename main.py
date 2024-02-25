@@ -12,12 +12,10 @@ load_dotenv()
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key=os.urandom(32))
 
-
 templates = Jinja2Templates(directory='templates')
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-
 
 @app.get('/', response_class=HTMLResponse)
 async def index(request: Request):
@@ -52,7 +50,7 @@ async def starred_data(request: Request):
     if 'access_token' not in request.session.keys():
         return RedirectResponse('/')
 
-    headers = {'Accept': 'application/json', 'Authorization': f'Bearer {request.session["access_token"]}', 'X-GitHub-Api-Version': '2022-11-28'}
+    headers = {'Accept': 'application/json', 'Authorization': f'Bearer {request.session["access_token"]}'}
 
     # Get all starred repositories
     async with httpx.AsyncClient() as client:
