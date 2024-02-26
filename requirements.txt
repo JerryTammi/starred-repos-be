@@ -1,4 +1,6 @@
 fastapi
+# Needed for docker. No
+itsdangerous
 uvicorn[standard]
 jinja2
 httpx
