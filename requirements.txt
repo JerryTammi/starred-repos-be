@@ -1,5 +1,5 @@
 fastapi
-# Needed for docker. No
+# Needed for docker
 itsdangerous
 uvicorn[standard]
 jinja2
