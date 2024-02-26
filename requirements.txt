@@ -1,5 +1,5 @@
 fastapi
-# Needed for docker
+# Required for SessionMiddleware
 itsdangerous
 uvicorn[standard]
 jinja2
