@@ -1,3 +1,7 @@
+# References
+# https://www.youtube.com/watch?v=Pm938UxLEwQ [1]
+# https://stackoverflow.com/questions/70617258/session-object-in-fastapi-similar-to-flask [2]
+
 import os
 import httpx
 import json
@@ -10,7 +14,7 @@ from starlette.middleware.sessions import SessionMiddleware
 load_dotenv()
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key=os.urandom(32))
+app.add_middleware(SessionMiddleware, secret_key=os.urandom(32)) # [2]
 
 templates = Jinja2Templates(directory='templates')
 
@@ -29,6 +33,7 @@ async def index(request: Request):
 
 @app.get('/callback')
 async def callback(code: str, request: Request):
+    # [1] params and headers
     params = {
         'client_id':CLIENT_ID,
         'client_secret':CLIENT_SECRET,
@@ -36,7 +41,7 @@ async def callback(code: str, request: Request):
     }
     headers = {'Accept': 'application/json'}
 
-    # Get Access token
+    # [1] Get Access token
     async with httpx.AsyncClient() as client:
         response = await client.post(url='https://github.com/login/oauth/access_token', params=params, headers=headers)
         response_json = response.json()
@@ -49,12 +54,13 @@ async def starred_data(request: Request):
     if 'access_token' not in request.session.keys():
         return RedirectResponse('/')
 
+    # [1] headers
     headers = {'Accept': 'application/json', 'Authorization': f'Bearer {request.session["access_token"]}'}
 
-    # Get all starred repositories
+    # [1] Get all starred repositories
     async with httpx.AsyncClient() as client:
         response = await client.get('https://api.github.com/user/starred', headers=headers)
-    
+
     # If the access code has expired, delete saved data and redirect to home page
     if response.status_code != 200:
         del request.session['access_token']
@@ -63,7 +69,6 @@ async def starred_data(request: Request):
     response_json = response.json()
     starred_data = convert_starred(response_json)
     return starred_data
-
 
 def convert_starred(raw_json: json):
     starred_data = {'number of starred repositories': 0, 'starred repositories': []}
