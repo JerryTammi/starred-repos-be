@@ -1,3 +1,4 @@
 exercise.md
 .env
 __pycache__/
+venv/
