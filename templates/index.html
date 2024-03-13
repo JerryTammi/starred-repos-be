@@ -2,10 +2,6 @@
   <head>
   </head>
   <body>
-    {% if user %}
-    <a href="/github/starred">Get starred repositories</a>
-    {% else %}
-    <a href="https://github.com/login/oauth/authorize?client_id={{client_id}}">Login with github</a><br>
-    {% endif %}
+    <a href="https://github.com/login/oauth/authorize?client_id={{client_id}}">Login with github and display filtered starred repositories</a><br>
   </body>
 </html>

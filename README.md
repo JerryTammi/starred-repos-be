@@ -27,6 +27,3 @@ http://localhost:8000
 ## References
 https://www.youtube.com/watch?v=Pm938UxLEwQ
 - For async with httpx.AsyncClient(), headers and params
-
-https://stackoverflow.com/questions/70617258/session-object-in-fastapi-similar-to-flask
-- For FastAPI sessions
