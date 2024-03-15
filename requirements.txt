@@ -1,4 +1,6 @@
 fastapi
+# Required for SessionMiddleware
+itsdangerous
 uvicorn[standard]
 jinja2
 httpx
